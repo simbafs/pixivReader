@@ -20,6 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 			book,
 		})
 	} else {
+		console.log(`fetch book ${id}`)
 		getTranslatedNovel(id)
 			.then(book => {
 				cache.set(id, book)

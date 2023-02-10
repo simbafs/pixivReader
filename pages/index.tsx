@@ -6,8 +6,11 @@ export default function Home() {
 	const [id, setID] = useState('')
 	const [book, setBook] = useState<book | null>(null)
 	const [err, setErr] = useState<any>(null)
+	const [loading, setLoading] = useState(false)
 
 	const handleGet = () => {
+		setLoading(true)
+		setErr(null)
 		fetch(`/api/novel?id=${id}`)
 			.then(res => res.json())
 			.then(res => {
@@ -16,6 +19,9 @@ export default function Home() {
 				setErr(null)
 			})
 			.catch(err => setErr(err))
+			.finally(() => {
+				setLoading(false)
+			})
 	}
 
 	return <>
@@ -31,7 +37,12 @@ export default function Home() {
 				onChange={e => setID(e.target.value)}
 			/>
 			<button onClick={handleGet}>Get</button>
-			{err ? <pre>Error: {JSON.stringify(err, null, 2)}</pre> : <Book book={book} />}
+			{err
+				? <pre>Error: {JSON.stringify(err, null, 2)}</pre>
+				: loading
+					? <h1>Loaing...</h1>
+					: <Book book={book}
+					/>}
 		</main>
 	</>
 
