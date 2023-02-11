@@ -156,6 +156,7 @@ function ColorPicker({ color, setColor }: {
 }) {
 	const [show, setShow] = useState(false)
 
+	// https://stackoverflow.com/questions/11867545/change-text-color-based-on-brightness-of-the-covered-background-area
 	const brightness = (color: RGBColor) => Math.round((color.r * 299 + color.g * 587 + color.b * 114) / 1000);
 
 	return <>
