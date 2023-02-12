@@ -46,6 +46,7 @@ export function text2Chunks(text: string): string[] {
 			last = chunk
 		}
 	}
+	chunks.push(last)
 
 	return chunks
 }
