@@ -43,7 +43,7 @@ export default function Home() {
 			<link rel="icon" href="/favicon.ico" />
 		</Head>
 		<main style={{
-			minHeight: 'calc(100vh - 16px)',
+			minHeight: 'calc(100vh - 16px - 20px)',
 			padding: '8px',
 			color: setting.color.hex,
 			backgroundColor: setting.backgroundColor.hex,
@@ -70,7 +70,7 @@ export default function Home() {
 					/>
 			}
 		</main>
+		<footer style={{ height: '20px' }}>本網站使用 <a href="https://justfont.com/huninn/">jf 粉圓體</a></footer>
 	</>
-
 }
 
