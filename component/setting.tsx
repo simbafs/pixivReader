@@ -5,14 +5,12 @@ export type SettingOptions = {
 	fontSize: number, // postfix px
 	lineHeight: number,
 	letterSpacing: number, // postfix px
-	// fontFamily: string, // in list
 	color: ColorResult,
 	backgroundColor: ColorResult,
 }
 
 type OptionKey = keyof SettingOptions
 
-// const availableFonds = []
 
 const black: ColorResult = {
 	hsl: { h: 0, s: 0, l: 0, a: 1 },
@@ -26,23 +24,12 @@ const white: ColorResult = {
 	rgb: { r: 255, g: 255, b: 255, a: 1 },
 }
 
-export const defaultSetting = {
+export const defaultSetting: SettingOptions = {
 	fontSize: 16,
 	lineHeight: 1.2,
 	letterSpacing: 0.032,
 	color: black,
 	backgroundColor: white,
-}
-
-export function Setting() {
-	const [setting, setSetting] = useState<SettingOptions>({
-		fontSize: 16,
-		lineHeight: 1.2,
-		letterSpacing: 0.032,
-		color: black,
-		backgroundColor: white,
-	})
-	return <SettingPopup setting={setting} setSetting={setSetting} />
 }
 
 export default function SettingPopup({ setting, setSetting }: {
