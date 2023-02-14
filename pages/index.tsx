@@ -1,5 +1,6 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 import { book } from '@/lib/novel'
 
@@ -7,6 +8,7 @@ import Setting, { SettingOptions, defaultSetting } from '@/component/setting'
 import Book from '@/component/book'
 
 export default function Home() {
+	const router = useRouter()
 	const [id, setID] = useState('')
 	const [book, setBook] = useState<book | null>(null)
 	const [err, setErr] = useState<any>(null)
@@ -14,7 +16,16 @@ export default function Home() {
 
 	const [setting, setSetting] = useState<SettingOptions>(defaultSetting)
 
-	const handleGet = () => {
+	useEffect(() => {
+		if (!router.query.id) return
+		let id: string
+		if (Array.isArray(router.query.id)) id = router.query.id[0]
+		else id = router.query.id
+		setID(id)
+		handleGet(id)
+	}, [router.query.id])
+
+	const handleGet = (id: string) => {
 		setLoading(true)
 		setErr(null)
 		fetch(`/api/novel?id=${id}`)
@@ -55,7 +66,7 @@ export default function Home() {
 				style={inputStyle}
 			/>
 			<button
-				onClick={handleGet}
+				onClick={() => handleGet(id)}
 				style={inputStyle}
 			>Get</button>
 			<Setting

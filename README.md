@@ -9,3 +9,4 @@ use [google translate](https://www.npmjs.com/package/google-translate-api-x) to 
 - [ ] store novel in local
 - [ ] support more translate engines, eg. deepL
 - [ ] a search page
+- [ ] display image in novel
