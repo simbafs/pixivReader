@@ -10,6 +10,7 @@ export default function Book({ book, setting }: { book: book | null, setting: Se
 		<p>pixiv page:<a
 			href={`https://www.pixiv.net/novel/show.php?id=${book.id}`}
 			target="_blank"
+			rel="noreferrer"
 		>{`https://www.pixiv.net/novel/show.php?id=${book.id}`}</a>
 		</p>
 		<hr />

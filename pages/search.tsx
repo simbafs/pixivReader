@@ -25,6 +25,7 @@ function SearchResultList({ result }: { result: SearchResult[] | undefined }) {
 				<p>pixiv page:<a
 					href={`https://www.pixiv.net/novel/show.php?id=${novel.id}`}
 					target="_blank"
+					rel="noreferrer"
 				>{`https://www.pixiv.net/novel/show.php?id=${novel.id}`}</a>
 				</p>
 			</div>
