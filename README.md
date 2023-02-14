@@ -8,7 +8,7 @@ use [google translate](https://www.npmjs.com/package/google-translate-api-x) to 
 - [ ] better UI/UX
 - [ ] store novel in local
 - [ ] support more translate engines, eg. deepL
-- [ ] a search page
+- [x] a search page
 - [ ] display image in novel
 - [ ] search by tag
 - [ ] correct translate string with html tag
