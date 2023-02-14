@@ -20,9 +20,7 @@ function SearchResultList({ result }: { result: SearchResult[] | undefined }) {
 				<Link href={`/?id=${novel.id}`}>
 					<h1>{novel.title}</h1>
 				</Link>
-				{
-					<p dangerouslySetInnerHTML={{ __html: novel.description }} />
-				}
+				<p dangerouslySetInnerHTML={{ __html: novel.description }} />
 				<p>{novel.tags.join(', ')}</p>
 				<p>pixiv page:<a
 					href={`https://www.pixiv.net/novel/show.php?id=${novel.id}`}
@@ -39,6 +37,7 @@ function SearchResultList({ result }: { result: SearchResult[] | undefined }) {
 export default function Search() {
 	const [search, setSearch] = useLocalStorage('search', '')
 	const [page, setPage] = useState(1)
+	const [shoudTranslate, setShouldTranslate] = useLocalStorage('shouldTranslate', false)
 
 	return <>
 		<fieldset>
@@ -56,8 +55,14 @@ export default function Search() {
 				onChange={e => setPage(+e.target.value)}
 				min={1}
 			/>
+			<label>Should Translate: </label>
+			<input
+				type="checkbox"
+				checked={shoudTranslate}
+				onChange={e => setShouldTranslate(e.target.checked)}
+			/>
 		</fieldset>
 
-		<SearchBlock url={`/api/search?q=${search}&p=${page}`} />
+		<SearchBlock url={`/api/search?q=${search}&p=${page}&t=${shoudTranslate ? 1 : 0}`} />
 	</>
 }

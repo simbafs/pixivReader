@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import sanitizeHtml from 'sanitize-html'
+import translate from '@/lib/translate'
 
 export type SearchResult = {
 	id: string,
@@ -22,8 +22,9 @@ type Data = {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-	let { q: search, p: pageString } = req.query
+	let { q: search, p: pageString, t: shouldTranslateStr } = req.query
 	let page = 1
+	let shouldTranslate = false
 
 	if (Array.isArray(search)) {
 		search = search.join(' ')
@@ -41,9 +42,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 		page = parseInt(pageString)
 	}
 
+	if (Array.isArray(shouldTranslateStr)) shouldTranslateStr = shouldTranslateStr[0]
+	shouldTranslate = shouldTranslateStr === '1'
+
 	return fetch(`https://www.pixiv.net/ajax/search/novels/${search}?word=${search}&order=date_d&mode=all&p=${page}`)
 		.then(res => res.json())
-		.then(data => filterData(data?.body?.novel?.data))
+		.then(data => filterData(data?.body?.novel?.data, { shouldTranslate }))
 		.then((data: SearchResult[]) => res.status(200).json({
 			error: false,
 			body: data,
@@ -54,12 +58,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 		}))
 }
 
-function filterData(data: SearchResult[]): SearchResult[] {
-	// for (let key in data) {
-	// 	data[key].description = sanitizeHtml(data[key].description, {
-	// 		allowedTags: ['br'],
-	// 	}).replaceAll('<br />', `\n`)
-	// }
-	// console.log(data)
+type filterOptions = {
+	shouldTranslate: boolean
+}
+async function filterData(data: SearchResult[], opt: filterOptions): Promise<SearchResult[]> {
+	if (opt.shouldTranslate) for (let key in data) {
+		let { title, description } = await translate({
+			title: data[key].title,
+			description: data[key].description
+		})
+		data[key].title = title
+		data[key].description = description
+	}
 	return data
 }

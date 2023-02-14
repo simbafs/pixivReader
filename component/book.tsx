@@ -6,7 +6,7 @@ export default function Book({ book, setting }: { book: book | null, setting: Se
 	return <>
 		<h1>{book.title}</h1>
 		<p>{book.tags.join(', ')}</p>
-		<p>{book.description}</p>
+		<p dangerouslySetInnerHTML={{ __html: book.description }} />
 		<p>pixiv page:<a
 			href={`https://www.pixiv.net/novel/show.php?id=${book.id}`}
 			target="_blank"

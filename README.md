@@ -11,3 +11,4 @@ use [google translate](https://www.npmjs.com/package/google-translate-api-x) to 
 - [ ] a search page
 - [ ] display image in novel
 - [ ] search by tag
+- [ ] correct translate string with html tag
