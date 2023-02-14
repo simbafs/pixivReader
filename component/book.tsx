@@ -7,6 +7,11 @@ export default function Book({ book, setting }: { book: book | null, setting: Se
 		<h1>{book.title}</h1>
 		<p>{book.tags.join(', ')}</p>
 		<p>{book.description}</p>
+		<p>pixiv page:<a
+			href={`https://www.pixiv.net/novel/show.php?id=${book.id}`}
+			target="_blank"
+		>{`https://www.pixiv.net/novel/show.php?id=${book.id}`}</a>
+		</p>
 		<hr />
 		<div style={{ overflowWrap: 'anywhere', }}>
 			{book.content.split('\n').map((text, index) => <p
