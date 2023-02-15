@@ -1,7 +1,6 @@
-import { useState } from "react";
 import useSWR from 'swr'
 import Link from 'next/link'
-import { useLocalStorage } from 'usehooks-ts'
+import { useSessionStorage, useDebounce } from 'usehooks-ts'
 import { SearchResult } from "@/pages/api/search";
 
 function SearchBlock({ url }: { url: string }) {
@@ -31,14 +30,13 @@ function SearchResultList({ result }: { result: SearchResult[] | undefined }) {
 			</div>
 			<hr />
 		</div>)}
-		<pre>{JSON.stringify(result, null, 2)}</pre>
 	</>
 }
 
 export default function Search() {
-	const [search, setSearch] = useLocalStorage('search', '')
-	const [page, setPage] = useState(1)
-	const [shoudTranslate, setShouldTranslate] = useLocalStorage('shouldTranslate', false)
+	const [search, setSearch] = useSessionStorage('search', '')
+	const [page, setPage] = useSessionStorage('page', 1)
+	const [shoudTranslate, setShouldTranslate] = useSessionStorage('shouldTranslate', false)
 
 	return <>
 		<fieldset>
@@ -64,6 +62,6 @@ export default function Search() {
 			/>
 		</fieldset>
 
-		<SearchBlock url={`/api/search?q=${search}&p=${page}&t=${shoudTranslate ? 1 : 0}`} />
+		{useDebounce(<SearchBlock url={`/api/search?q=${search}&p=${page}&t=${shoudTranslate ? 1 : 0}`} />, 500)}
 	</>
 }
