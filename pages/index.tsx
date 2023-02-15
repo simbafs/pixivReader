@@ -76,7 +76,7 @@ export default function Home() {
 			{err
 				? <pre>Error: {JSON.stringify(err, null, 2)}</pre>
 				: loading
-					? <h1>Loaing...</h1>
+					? <h1>Loading...</h1>
 					: <Book book={book} setting={setting}
 					/>
 			}
