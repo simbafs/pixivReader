@@ -45,8 +45,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 	if (Array.isArray(shouldTranslateStr)) shouldTranslateStr = shouldTranslateStr[0]
 	shouldTranslate = shouldTranslateStr === '1'
 
-	return fetch(`https://www.pixiv.net/ajax/search/novels/${search}?word=${search}&order=date_d&mode=all&p=${page}`)
+	return fetch(`https://www.pixiv.net/ajax/search/novels/${search}?word=${search}&order=date_d&mode=all&p=${page}&s_mode=s_tag`)
 		.then(res => res.json())
+		.then(data => {
+			if(data.error) throw new Error(data.message)
+			return data
+		})
 		.then(data => filterData(data?.body?.novel?.data, { shouldTranslate }))
 		.then((data: SearchResult[]) => res.status(200).json({
 			error: false,
@@ -54,7 +58,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 		}))
 		.catch(err => res.status(400).json({
 			error: true,
-			body: err,
+			body: err?.message,
 		}))
 }
 

@@ -8,6 +8,7 @@ function SearchBlock({ url }: { url: string }) {
 
 	if (!data) return <h1>Loading...</h1>
 	if (error) return <pre>{JSON.stringify(error, null, 2)}</pre>
+	if(data.error) return <pre>Error: {JSON.stringify(data.body, null, 2)}</pre>
 	return <SearchResultList result={data.body} />
 }
 
