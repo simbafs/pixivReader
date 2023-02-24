@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
@@ -74,6 +75,7 @@ export default function Home() {
 						Get
 					</button>
 					<Setting setting={setting} setSetting={setSetting} />
+					<Link href="/search">Search</Link>
 				</form>
 				{err ? (
 					<pre>Error: {JSON.stringify(err, null, 2)}</pre>
