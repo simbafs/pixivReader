@@ -3,13 +3,14 @@
 use [google translate](https://www.npmjs.com/package/google-translate-api-x) to translate novel from pixiv
 
 # TODO
-- [x] cache 
-- [x] adjustable font and theme
-- [ ] better UI/UX
-- [ ] store novel in local
-- [ ] support more translate engines, eg. deepL
-- [x] a search page
-- [ ] display image in novel
-- [x] search by tag
-- [ ] correct translate string with html tag
-- [ ] support novel series
+
+-   [x] cache
+-   [x] adjustable font and theme
+-   [ ] better UI/UX
+-   [ ] store novel in local
+-   [ ] support more translate engines, eg. deepL
+-   [x] a search page
+-   [ ] display image in novel
+-   [x] search by tag
+-   [ ] correct translate string with html tag
+-   [ ] support novel series
