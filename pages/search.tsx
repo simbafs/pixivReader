@@ -1,19 +1,19 @@
-import useSWR from 'swr';
-import Link from 'next/link';
-import { useSessionStorage, useDebounce } from 'usehooks-ts';
-import { SearchResult } from '@/pages/api/search';
+import useSWR from 'swr'
+import Link from 'next/link'
+import { useSessionStorage, useDebounce } from 'usehooks-ts'
+import { SearchResult } from '@/pages/api/search'
 
 function SearchBlock({ url }: { url: string }) {
-	const { data, error } = useSWR(url, url => fetch(url).then(res => res.json()));
+	const { data, error } = useSWR(url, url => fetch(url).then(res => res.json()))
 
-	if (!data) return <h1>Loading...</h1>;
-	if (error) return <pre>{JSON.stringify(error, null, 2)}</pre>;
-	if (data.error) return <pre>Error: {JSON.stringify(data.body, null, 2)}</pre>;
-	return <SearchResultList result={data.body} />;
+	if (!data) return <h1>Loading...</h1>
+	if (error) return <pre>{JSON.stringify(error, null, 2)}</pre>
+	if (data.error) return <pre>Error: {JSON.stringify(data.body, null, 2)}</pre>
+	return <SearchResultList result={data.body} />
 }
 
 function SearchResultList({ result }: { result: SearchResult[] | undefined }) {
-	if (!result) return null;
+	if (!result) return null
 	return (
 		<>
 			{result.map((novel, index) => (
@@ -37,13 +37,13 @@ function SearchResultList({ result }: { result: SearchResult[] | undefined }) {
 				</div>
 			))}
 		</>
-	);
+	)
 }
 
 export default function Search() {
-	const [search, setSearch] = useSessionStorage('search', '');
-	const [page, setPage] = useSessionStorage('page', 1);
-	const [shoudTranslate, setShouldTranslate] = useSessionStorage('shouldTranslate', false);
+	const [search, setSearch] = useSessionStorage('search', '')
+	const [page, setPage] = useSessionStorage('page', 1)
+	const [shoudTranslate, setShouldTranslate] = useSessionStorage('shouldTranslate', false)
 
 	return (
 		<>
@@ -59,5 +59,5 @@ export default function Search() {
 
 			{useDebounce(<SearchBlock url={`/api/search?q=${search}&p=${page}&t=${shoudTranslate ? 1 : 0}`} />, 500)}
 		</>
-	);
+	)
 }

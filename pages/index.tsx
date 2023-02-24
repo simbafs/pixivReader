@@ -1,51 +1,57 @@
-import Head from 'next/head';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import Head from 'next/head'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
-import { book } from '@/lib/novel';
+import { book } from '@/lib/novel'
 
-import Setting, { SettingOptions, defaultSetting } from '@/component/setting';
-import Book from '@/component/book';
+import Setting, { SettingOptions, defaultSetting } from '@/component/setting'
+import Book from '@/component/book'
 
 export default function Home() {
-	const router = useRouter();
-	const [id, setID] = useState('');
-	const [book, setBook] = useState<book | null>(null);
-	const [err, setErr] = useState<any>(null);
-	const [loading, setLoading] = useState(false);
+	const router = useRouter()
+	const [id, setID] = useState('')
+	const [book, setBook] = useState<book | null>(null)
+	const [err, setErr] = useState<any>(null)
+	const [loading, setLoading] = useState(false)
 
-	const [setting, setSetting] = useState<SettingOptions>(defaultSetting);
+	const [setting, setSetting] = useState<SettingOptions>(defaultSetting)
 
 	useEffect(() => {
-		if (!router.query.id) return;
-		let id: string;
-		if (Array.isArray(router.query.id)) id = router.query.id[0];
-		else id = router.query.id;
-		setID(id);
-		handleGet(id);
-	}, [router.query.id]);
+		if (!router.query.id) return
+		let id: string
+		if (Array.isArray(router.query.id)) id = router.query.id[0]
+		else id = router.query.id
+		setID(id)
+		handleGet(id)
+	}, [router.query.id])
 
-	const handleGet = (id: string) => {
-		setLoading(true);
-		setErr(null);
+	const handleGet = (id: string, e?: React.FormEvent<HTMLFormElement>) => {
+		e?.preventDefault()
+
+		if (!id.match(/^[0-9]+$/)) id = id.match(/id=(?<id>[0-9]+)/)?.groups?.id || ''
+
+		if (id === '') return
+
+		setLoading(true)
+		setErr(null)
 		fetch(`/api/novel?id=${id}`)
 			.then(res => res.json())
 			.then(res => {
-				if (res.error) return setErr(res.message);
-				setBook(res.book);
-				setErr(null);
+				if (res.error) return setErr(res.message)
+				setBook(res.book)
+				setErr(null)
 			})
 			.catch(err => setErr(err))
 			.finally(() => {
-				setLoading(false);
-			});
-	};
+				setLoading(false)
+			})
+	}
 
 	const inputStyle = {
 		borderColor: setting.color.hex,
 		color: setting.color.hex,
 		backgroundColor: setting.backgroundColor.hex,
-	};
+	}
 
 	return (
 		<>
@@ -62,11 +68,13 @@ export default function Home() {
 					backgroundColor: setting.backgroundColor.hex,
 				}}
 			>
-				<input type="text" value={id} onChange={e => setID(e.target.value)} style={inputStyle} />
-				<button onClick={() => handleGet(id)} style={inputStyle}>
-					Get
-				</button>
-				<Setting setting={setting} setSetting={setSetting} />
+				<form onSubmit={e => handleGet(id, e)}>
+					<input type="text" value={id} onChange={e => setID(e.target.value)} style={inputStyle} />
+					<button type="submit" style={inputStyle}>
+						Get
+					</button>
+					<Setting setting={setting} setSetting={setSetting} />
+				</form>
 				{err ? (
 					<pre>Error: {JSON.stringify(err, null, 2)}</pre>
 				) : loading ? (
@@ -79,5 +87,5 @@ export default function Home() {
 				本網站使用 <a href="https://justfont.com/huninn/">jf 粉圓體</a>
 			</footer>
 		</>
-	);
+	)
 }

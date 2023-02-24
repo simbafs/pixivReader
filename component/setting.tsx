@@ -1,27 +1,27 @@
-import React, { useState } from 'react';
-import { ChromePicker, ColorResult, RGBColor } from 'react-color';
+import React, { useState } from 'react'
+import { ChromePicker, ColorResult, RGBColor } from 'react-color'
 
 export type SettingOptions = {
-	fontSize: number; // postfix px
-	lineHeight: number;
-	letterSpacing: number; // postfix px
-	color: ColorResult;
-	backgroundColor: ColorResult;
-};
+	fontSize: number // postfix px
+	lineHeight: number
+	letterSpacing: number // postfix px
+	color: ColorResult
+	backgroundColor: ColorResult
+}
 
-type OptionKey = keyof SettingOptions;
+type OptionKey = keyof SettingOptions
 
 const black: ColorResult = {
 	hsl: { h: 0, s: 0, l: 0, a: 1 },
 	hex: '#000000',
 	rgb: { r: 0, g: 0, b: 0, a: 1 },
-};
+}
 
 const white: ColorResult = {
 	hsl: { h: 0, s: 0, l: 1, a: 1 },
 	hex: '#ffffff',
 	rgb: { r: 255, g: 255, b: 255, a: 1 },
-};
+}
 
 export const defaultSetting: SettingOptions = {
 	fontSize: 16,
@@ -29,33 +29,33 @@ export const defaultSetting: SettingOptions = {
 	letterSpacing: 0.032,
 	color: black,
 	backgroundColor: white,
-};
+}
 
 export default function SettingPopup({
 	setting,
 	setSetting,
 }: {
-	setting: SettingOptions;
-	setSetting: React.Dispatch<React.SetStateAction<SettingOptions>>;
+	setting: SettingOptions
+	setSetting: React.Dispatch<React.SetStateAction<SettingOptions>>
 }) {
-	const [show, setShow] = useState(false);
+	const [show, setShow] = useState(false)
 
 	const setOption = (key: OptionKey, val: any) =>
 		setSetting(setting => ({
 			...setting,
 			[key]: val,
-		}));
+		}))
 
 	const changeHandler = (key: OptionKey) => (e: React.ChangeEvent<HTMLInputElement>) => {
-		let val = e.target.value;
-		setOption(key, val);
-	};
+		let val = e.target.value
+		setOption(key, val)
+	}
 
 	const inputStyle = {
 		borderColor: setting.color.hex,
 		color: setting.color.hex,
 		backgroundColor: setting.backgroundColor.hex,
-	};
+	}
 
 	return !show ? (
 		<button onClick={() => setShow(true)} style={inputStyle}>
@@ -136,20 +136,20 @@ export default function SettingPopup({
 				Close
 			</button>
 		</div>
-	);
+	)
 }
 
 function ColorPicker({
 	color,
 	setColor,
 }: {
-	color: ColorResult;
-	setColor: React.Dispatch<React.SetStateAction<ColorResult>>;
+	color: ColorResult
+	setColor: React.Dispatch<React.SetStateAction<ColorResult>>
 }) {
-	const [show, setShow] = useState(false);
+	const [show, setShow] = useState(false)
 
 	// https://stackoverflow.com/questions/11867545/change-text-color-based-on-brightness-of-the-covered-background-area
-	const brightness = (color: RGBColor) => Math.round((color.r * 299 + color.g * 587 + color.b * 114) / 1000);
+	const brightness = (color: RGBColor) => Math.round((color.r * 299 + color.g * 587 + color.b * 114) / 1000)
 
 	return (
 		<>
@@ -183,5 +183,5 @@ function ColorPicker({
 				</div>
 			) : null}
 		</>
-	);
+	)
 }

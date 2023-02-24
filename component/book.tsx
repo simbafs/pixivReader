@@ -1,8 +1,8 @@
-import { book } from '@/lib/novel';
-import { SettingOptions } from '@/component/setting';
+import { book } from '@/lib/novel'
+import { SettingOptions } from '@/component/setting'
 
 export default function Book({ book, setting }: { book: book | null; setting: SettingOptions }) {
-	if (!book) return null;
+	if (!book) return null
 	return (
 		<>
 			<h1>{book.title}</h1>
@@ -33,5 +33,5 @@ export default function Book({ book, setting }: { book: book | null; setting: Se
 			</div>
 			{book.err ? <pre>{JSON.stringify(book.err, null, 2)}</pre> : null}
 		</>
-	);
+	)
 }
