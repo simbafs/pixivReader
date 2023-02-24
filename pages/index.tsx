@@ -7,6 +7,7 @@ import { book } from '@/lib/novel'
 
 import Setting, { SettingOptions, defaultSetting } from '@/component/setting'
 import Book from '@/component/book'
+import { useLocalStorage, useSessionStorage} from 'usehooks-ts'
 
 export default function Home() {
 	const router = useRouter()
@@ -15,7 +16,7 @@ export default function Home() {
 	const [err, setErr] = useState<any>(null)
 	const [loading, setLoading] = useState(false)
 
-	const [setting, setSetting] = useState<SettingOptions>(defaultSetting)
+	const [setting, setSetting] = useLocalStorage<SettingOptions>('setting', defaultSetting)
 
 	useEffect(() => {
 		if (!router.query.id) return
@@ -25,6 +26,10 @@ export default function Home() {
 		setID(id)
 		handleGet(id)
 	}, [router.query.id])
+
+	// useEffect(() => {
+	// 	document.querySelector(':root').
+	// }, [setting.backgroundColor.hex])
 
 	const handleGet = (id: string, e?: React.FormEvent<HTMLFormElement>) => {
 		e?.preventDefault()
@@ -48,12 +53,6 @@ export default function Home() {
 			})
 	}
 
-	const inputStyle = {
-		borderColor: setting.color.hex,
-		color: setting.color.hex,
-		backgroundColor: setting.backgroundColor.hex,
-	}
-
 	return (
 		<>
 			<Head>
@@ -65,17 +64,45 @@ export default function Home() {
 				style={{
 					minHeight: 'calc(100vh - 16px - 20px)',
 					padding: '8px',
-					color: setting.color.hex,
-					backgroundColor: setting.backgroundColor.hex,
 				}}
 			>
-				<form onSubmit={e => handleGet(id, e)}>
-					<input type="text" value={id} onChange={e => setID(e.target.value)} style={inputStyle} />
-					<button type="submit" style={inputStyle}>
+				<form onSubmit={e => handleGet(id, e)} className="ts-row is-compact">
+					<div className="ts-input is-underlined">
+						<input
+							className="text"
+							type="text"
+							value={id}
+							onChange={e => setID(e.target.value)}
+							style={{
+								backgroundColor: setting.backgroundColor.hex,
+							}}
+						/>
+					</div>
+					<button
+						className="ts-button"
+						type="submit"
+						style={{
+							borderColor: setting.backgroundColor.hex,
+							backgroundColor: setting.backgroundColor.hex,
+							color: setting.color.hex,
+						}}
+					>
 						Get
 					</button>
 					<Setting setting={setting} setSetting={setSetting} />
-					<Link href="/search">Search</Link>
+					<Link href="/search">
+						<button
+							className="ts-button is-inverted"
+							type="button"
+							style={{
+								borderColor: setting.backgroundColor.hex,
+								backgroundColor: setting.backgroundColor.hex,
+								color: setting.color.hex,
+							}}
+						>
+							Search
+						</button>
+					</Link>
 				</form>
 				{err ? (
 					<pre>Error: {JSON.stringify(err, null, 2)}</pre>

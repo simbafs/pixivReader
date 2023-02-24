@@ -51,100 +51,141 @@ export default function SettingPopup({
 		setOption(key, val)
 	}
 
-	const inputStyle = {
-		borderColor: setting.color.hex,
-		color: setting.color.hex,
-		backgroundColor: setting.backgroundColor.hex,
-	}
-
-	return !show ? (
-		<button onClick={() => setShow(true)} style={inputStyle}>
-			Setting
-		</button>
-	) : (
-		<div>
-			<div>
-				<label>大小：</label>
-				<input
-					type="range"
-					value={setting.fontSize}
-					onChange={changeHandler('fontSize')}
-					min={1}
-					max={72}
-					style={inputStyle}
-				/>
-				<input
-					type="number"
-					value={setting.fontSize}
-					onChange={changeHandler('fontSize')}
-					min={1}
-					max={72}
-					style={inputStyle}
-				/>
-				<label>px</label>
-			</div>
-			<div>
-				<label>行高：</label>
-				<input
-					type="range"
-					value={setting.lineHeight}
-					onChange={changeHandler('lineHeight')}
-					min={0}
-					max={2}
-					step={0.1}
-					style={inputStyle}
-				/>
-				<input
-					type="number"
-					value={setting.lineHeight}
-					onChange={changeHandler('lineHeight')}
-					min={0}
-					max={2}
-					step={0.1}
-					style={inputStyle}
-				/>
-			</div>
-			<div>
-				<label>行距：</label>
-				<input
-					type="range"
-					value={setting.letterSpacing}
-					onChange={changeHandler('letterSpacing')}
-					min={-10}
-					max={10}
-					style={inputStyle}
-				/>
-				<input
-					type="number"
-					value={setting.letterSpacing}
-					onChange={changeHandler('letterSpacing')}
-					min={-10}
-					max={10}
-					style={inputStyle}
-				/>
-				<label>px</label>
-			</div>
-			<div>
-				<label>文字顏色：</label>
-				<ColorPicker color={setting.color} setColor={color => setOption('color', color)} />
-			</div>
-			<div>
-				<label>背景顏色：</label>
-				<ColorPicker color={setting.backgroundColor} setColor={color => setOption('backgroundColor', color)} />
-			</div>
-			<button onClick={() => setShow(false)} style={inputStyle}>
-				Close
+	return (
+		<>
+			<button
+				className="ts-button is-inverted"
+				onClick={() => setShow(true)}
+				style={{
+					borderColor: setting.backgroundColor.hex,
+					backgroundColor: setting.backgroundColor.hex,
+					color: setting.color.hex,
+				}}
+			>
+				Setting
 			</button>
-		</div>
+
+			<div className={'ts-modal' + (show ? ' is-visible' : '')}>
+				<div className="content" style={{ overflow: 'unset' }}>
+					<div className="ts-content is-center-aligned is-vertically-padded">
+						<div className="ts-input is-end-labeled is-start-labeled">
+							<span className="label">大小</span>
+							<input
+								className="text"
+								type="number"
+								value={setting.fontSize}
+								onChange={changeHandler('fontSize')}
+								min={1}
+								max={72}
+							/>
+							<span className="label">px</span>
+						</div>
+						<div className="ts-input">
+							<input
+								className="text"
+								type="range"
+								value={setting.fontSize}
+								onChange={changeHandler('fontSize')}
+								min={1}
+								max={72}
+							/>
+						</div>
+						<div className="ts-space" />
+						<div className="ts-input is-end-labeled is-start-labeled">
+							<span className="label">行高</span>
+							<input
+								className="text"
+								type="number"
+								value={setting.lineHeight}
+								onChange={changeHandler('lineHeight')}
+								min={0}
+								max={2}
+								step={0.1}
+							/>
+							<span className="label" style={{ color: 'rgba(0,0,0,0)' }}>
+								XD
+							</span>
+						</div>
+						<div className="ts-input">
+							<input
+								className="text"
+								type="range"
+								value={setting.lineHeight}
+								onChange={changeHandler('lineHeight')}
+								min={0}
+								max={2}
+								step={0.1}
+							/>
+						</div>
+						<div className="ts-space" />
+						<div className="ts-input is-end-labeled is-start-labeled">
+							<span className="label">行距</span>
+							<input
+								className="text"
+								type="number"
+								value={setting.letterSpacing}
+								onChange={changeHandler('letterSpacing')}
+								min={-10}
+								max={10}
+							/>
+							<span className="label">px</span>
+						</div>
+						<div className="ts-input">
+							<input
+								className="text"
+								type="range"
+								value={setting.letterSpacing}
+								onChange={changeHandler('letterSpacing')}
+								min={-10}
+								max={10}
+							/>
+						</div>
+						<div className="ts-space" />
+						<ColorPicker
+							color={setting.color}
+							setColor={color => {
+								let html = document.querySelector('html')
+								if (html) html.style.setProperty('--ts-gray-800', color.hex)
+								setOption('color', color)
+							}}
+							label="文字"
+						/>
+						<div className="ts-space" />
+						<ColorPicker
+							color={setting.backgroundColor}
+							setColor={color => {
+								let html = document.querySelector('html')
+								if (html) html.style.setProperty('--ts-gray-50', color.hex)
+								setOption('backgroundColor', color)
+							}}
+							label="背景"
+						/>
+					</div>
+					<button
+						className="ts-button is-fluid is-inverted"
+						onClick={() => setShow(false)}
+						style={{
+							borderColor: setting.backgroundColor.hex,
+							backgroundColor: setting.backgroundColor.hex,
+							color: setting.color.hex,
+						}}
+					>
+						Close
+					</button>
+				</div>
+			</div>
+		</>
 	)
 }
 
 function ColorPicker({
 	color,
 	setColor,
+	label,
 }: {
 	color: ColorResult
-	setColor: React.Dispatch<React.SetStateAction<ColorResult>>
+	setColor: React.Dispatch<ColorResult>
+	label: string
 }) {
 	const [show, setShow] = useState(false)
 
@@ -153,15 +194,17 @@ function ColorPicker({
 
 	return (
 		<>
-			<button
-				onClick={() => setShow(show => !show)}
-				style={{
-					backgroundColor: color.hex,
-					color: brightness(color.rgb) > 125 ? 'black' : 'white',
-				}}
-			>
-				Pick Color: {color.hex}
-			</button>
+			<div className="ts-input is-start-labeled is-fluid">
+				<span className="label">{label}</span>
+				<input
+					type="color"
+					onClick={e => {
+						e.preventDefault()
+						setShow(show => !show)
+					}}
+					value={color.hex}
+				/>
+			</div>
 			{show ? (
 				<div
 					style={{
