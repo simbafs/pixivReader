@@ -29,9 +29,11 @@ export default function Home() {
 	const handleGet = (id: string, e?: React.FormEvent<HTMLFormElement>) => {
 		e?.preventDefault()
 
-		if (!id.match(/^[0-9]+$/)) id = id.match(/id=(?<id>[0-9]+)/)?.groups?.id || ''
-
 		if (id === '') return
+
+		if (!id.match(/^[0-9]+$/)) id = id.match(/id=(?<id>[0-9]+)/)?.groups?.id || ''
+		setID(id)
+		router.push(`/?id=${id}`)
 
 		setLoading(true)
 		setErr(null)
