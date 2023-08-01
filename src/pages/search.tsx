@@ -62,14 +62,13 @@ export default function Search() {
 	return (
 		<div className="p-2 bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50 flex flex-col min-h-screen">
 			<div className="grow">
-				<h1 className="text-2xl">Search</h1>
 				<div className="flex gap-2 flex-wrap">
 					<div>
 						<span className="inline-block px-3 py-2 sm:text-sm shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-l-md focus:ring-1">
 							Search:{' '}
 						</span>
 						<input
-							className="bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50 px-3 py-2 sm:text-sm shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-r-md focus:ring-1"
+							className="w-40 bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50 px-3 py-2 sm:text-sm shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-r-md focus:ring-1"
 							type="text"
 							value={search}
 							onChange={e => setSearch(e.target.value)}
@@ -80,7 +79,7 @@ export default function Search() {
 							Page:{' '}
 						</span>
 						<input
-							className="bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50 px-3 py-2 sm:text-sm shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-r-md focus:ring-1"
+							className="w-20 bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50 px-3 py-2 sm:text-sm shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-r-md focus:ring-1"
 							type="number"
 							value={page}
 							onChange={e => setPage(+e.target.value)}
@@ -95,7 +94,9 @@ export default function Search() {
 							<input
 								type="checkbox"
 								checked={shoudTranslate}
-								onChange={e => setShouldTranslate(e.target.checked)}
+								onChange={e =>
+									setShouldTranslate(e.target.checked)
+								}
 							/>
 						</span>
 					</div>
@@ -103,8 +104,9 @@ export default function Search() {
 
 				{useDebounce(
 					<SearchBlock
-						url={`/api/search?q=${search}&p=${page}&t=${shoudTranslate ? 1 : 0
-							}`}
+						url={`/api/search?q=${search}&p=${page}&t=${
+							shoudTranslate ? 1 : 0
+						}`}
 					/>,
 					500
 				)}
@@ -114,7 +116,9 @@ export default function Search() {
 				<a
 					href="https://justfont.com/huninn/"
 					className="text-blue-500 underline hover:underline-offset-0"
-				>jf 粉圓體</a>
+				>
+					jf 粉圓體
+				</a>
 			</footer>
 		</div>
 	)

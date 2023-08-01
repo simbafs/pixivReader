@@ -58,8 +58,8 @@ export default function Home() {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<div className="min-h-screen flex flex-col bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50">
-				<main className="grow p-2">
+			<div className="min-h-screen p-2 flex flex-col bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50">
+				<main className="grow">
 					<form
 						className="flex flex-wrap gap-1"
 						onSubmit={e => handleGet(id, e)}
@@ -76,6 +76,12 @@ export default function Home() {
 						>
 							Get
 						</button>
+						<Link
+							href="/list"
+							className="bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50 inline-block px-3 py-2 sm:text-sm shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md focus:ring-1"
+						>
+							List
+						</Link>
 						<Link
 							href="/search"
 							className="bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50 inline-block px-3 py-2 sm:text-sm shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md focus:ring-1"
@@ -96,7 +102,9 @@ export default function Home() {
 					<a
 						href="https://justfont.com/huninn/"
 						className="text-blue-500 underline hover:underline-offset-0"
-					>jf 粉圓體</a>
+					>
+						jf 粉圓體
+					</a>
 				</footer>
 			</div>
 		</>

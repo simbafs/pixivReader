@@ -1,8 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getTranslatedNovel, book } from '@/lib/novel'
-
-const cache = new Map<string, book>()
+import cache from '@/lib/cache'
 
 type Data = {
 	error: boolean
