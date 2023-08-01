@@ -21,11 +21,14 @@ export function text2Chunks(text: string): string[] {
 
 type strObj = { [key: string]: string }
 export default async function tr(strObj: strObj) {
-	const t = (text: string) => translate(text, { to: 'zh-TW' }).then(res => res.text)
+	const t = (text: string) =>
+		translate(text, { to: 'zh-TW' }).then(res => res.text)
 	let result: strObj = {}
 	for (let key in strObj) {
 		try {
-			result[key] = (await Promise.all(text2Chunks(strObj[key]).map(text => t(text)))).join(delimiter)
+			result[key] = (
+				await Promise.all(text2Chunks(strObj[key]).map(text => t(text)))
+			).join(delimiter)
 		} catch (e) {
 			console.log('Err: lib.tr:', e)
 			result[key] = strObj[key]

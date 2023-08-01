@@ -46,10 +46,11 @@ export default function SettingPopup({
 			[key]: val,
 		}))
 
-	const changeHandler = (key: OptionKey) => (e: React.ChangeEvent<HTMLInputElement>) => {
-		let val = e.target.value
-		setOption(key, val)
-	}
+	const changeHandler =
+		(key: OptionKey) => (e: React.ChangeEvent<HTMLInputElement>) => {
+			let val = e.target.value
+			setOption(key, val)
+		}
 
 	const inputStyle = {
 		borderColor: setting.color.hex,
@@ -126,11 +127,17 @@ export default function SettingPopup({
 			</div>
 			<div>
 				<label>文字顏色：</label>
-				<ColorPicker color={setting.color} setColor={color => setOption('color', color)} />
+				<ColorPicker
+					color={setting.color}
+					setColor={color => setOption('color', color)}
+				/>
 			</div>
 			<div>
 				<label>背景顏色：</label>
-				<ColorPicker color={setting.backgroundColor} setColor={color => setOption('backgroundColor', color)} />
+				<ColorPicker
+					color={setting.backgroundColor}
+					setColor={color => setOption('backgroundColor', color)}
+				/>
 			</div>
 			<button onClick={() => setShow(false)} style={inputStyle}>
 				Close
@@ -149,7 +156,8 @@ function ColorPicker({
 	const [show, setShow] = useState(false)
 
 	// https://stackoverflow.com/questions/11867545/change-text-color-based-on-brightness-of-the-covered-background-area
-	const brightness = (color: RGBColor) => Math.round((color.r * 299 + color.g * 587 + color.b * 114) / 1000)
+	const brightness = (color: RGBColor) =>
+		Math.round((color.r * 299 + color.g * 587 + color.b * 114) / 1000)
 
 	return (
 		<>

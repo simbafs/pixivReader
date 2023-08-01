@@ -21,7 +21,10 @@ type Data = {
 	body: SearchResult[]
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+export default async function handler(
+	req: NextApiRequest,
+	res: NextApiResponse<Data>
+) {
 	let { q: search, p: pageString, t: shouldTranslateStr } = req.query
 	let page = 1
 	let shouldTranslate = false
@@ -43,7 +46,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 		page = parseInt(pageString)
 	}
 
-	if (Array.isArray(shouldTranslateStr)) shouldTranslateStr = shouldTranslateStr[0]
+	if (Array.isArray(shouldTranslateStr))
+		shouldTranslateStr = shouldTranslateStr[0]
 	shouldTranslate = shouldTranslateStr === '1'
 
 	return fetch(
@@ -72,7 +76,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 type filterOptions = {
 	shouldTranslate: boolean
 }
-async function filterData(data: SearchResult[], opt: filterOptions): Promise<SearchResult[]> {
+async function filterData(
+	data: SearchResult[],
+	opt: filterOptions
+): Promise<SearchResult[]> {
 	if (opt.shouldTranslate)
 		for (let key in data) {
 			let { title, description } = await translate({

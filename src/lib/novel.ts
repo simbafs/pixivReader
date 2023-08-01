@@ -12,7 +12,9 @@ export type book = {
 
 export async function getNovel(id: string): Promise<book> {
 	if (!id) return new Promise((_, rej) => rej('novel not found'))
-	const data = await fetch(`https://www.pixiv.net/ajax/novel/${id}`).then(res => res.json())
+	const data = await fetch(`https://www.pixiv.net/ajax/novel/${id}`).then(
+		res => res.json()
+	)
 	if (!data) throw new Error('novel not found')
 	if (data.error) throw new Error('novel not found')
 	return {
@@ -26,7 +28,9 @@ export async function getNovel(id: string): Promise<book> {
 }
 
 export function filterContent(book: book) {
-	book.content.replace(/\[uploadedimage:[0-9]+\]/g, '').replace(/\[newpage\]/g, '')
+	book.content
+		.replace(/\[uploadedimage:[0-9]+\]/g, '')
+		.replace(/\[newpage\]/g, '')
 	return book
 }
 
@@ -41,4 +45,5 @@ export async function translateBook(book: book) {
 	}
 }
 
-export const getTranslatedNovel = (id: string) => getNovel(id).then(filterContent).then(translateBook)
+export const getTranslatedNovel = (id: string) =>
+	getNovel(id).then(filterContent).then(translateBook)

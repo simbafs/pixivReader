@@ -10,7 +10,10 @@ type Data = {
 	book?: book
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+export default async function handler(
+	req: NextApiRequest,
+	res: NextApiResponse<Data>
+) {
 	let id = Array.isArray(req.query.id) ? req.query.id[0] : req.query.id || ''
 
 	let book = cache.get(id)
@@ -23,17 +26,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 		console.log(`fetch book ${id}`)
 		getTranslatedNovel(id)
 			.then(book => {
+				console.log('hi')
 				cache.set(id, book)
 				res.status(200).json({
 					error: false,
 					book,
 				})
 			})
-			.catch(err =>
+			.catch(err => {
+				console.error(err)
 				res.status(400).json({
 					error: true,
 					message: err,
 				})
-			)
+			})
 	}
 }
