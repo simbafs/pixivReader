@@ -58,7 +58,7 @@ export default function Home() {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<div className="h-screen flex flex-col">
+			<div className="min-h-screen flex flex-col bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50">
 				<main className="grow p-2">
 					<form
 						className="flex flex-wrap gap-1"
@@ -68,17 +68,17 @@ export default function Home() {
 							type="text"
 							value={id}
 							onChange={e => setID(e.target.value)}
-							className="grow px-3 py-2 sm:text-sm bg-white shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md focus:ring-1"
+							className="bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50 grow px-3 py-2 sm:text-sm shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md focus:ring-1"
 						/>
 						<button
 							type="submit"
-							className="px-3 py-2 sm:text-sm bg-white shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md focus:ring-1"
+							className="bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50 px-3 py-2 sm:text-sm shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md focus:ring-1"
 						>
 							Get
 						</button>
 						<Link
 							href="/search"
-							className="inline-block px-3 py-2 sm:text-sm bg-white shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md focus:ring-1"
+							className="bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50 inline-block px-3 py-2 sm:text-sm shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md focus:ring-1"
 						>
 							Search
 						</Link>
@@ -93,7 +93,10 @@ export default function Home() {
 				</main>
 				<footer className="h-8">
 					本網站使用{' '}
-					<a href="https://justfont.com/huninn/">jf 粉圓體</a>
+					<a
+						href="https://justfont.com/huninn/"
+						className="text-blue-500 underline hover:underline-offset-0"
+					>jf 粉圓體</a>
 				</footer>
 			</div>
 		</>
