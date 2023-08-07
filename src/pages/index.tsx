@@ -94,6 +94,7 @@ export default function Home() {
 							<Book book={book} />
 						)}
 					</div>
+					<div className="grow" />
 					<div className="flex flex-wrap gap-1">
 						<input
 							type="text"
