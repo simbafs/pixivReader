@@ -59,38 +59,64 @@ export default function Home() {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<div className="min-h-screen flex flex-col bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50">
-				<main className="grow p-2">
-					<form
-						className="flex flex-wrap gap-1"
-						onSubmit={e => handleGet(id, e)}
-					>
+				<form
+					className="flex flex-col grow p-2"
+					onSubmit={e => handleGet(id, e)}
+				>
+					<div className="flex flex-wrap gap-1">
 						<input
 							type="text"
 							value={id}
 							onChange={e => setID(e.target.value)}
 							className="bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50 grow px-3 py-2 sm:text-sm shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md focus:ring-1"
 						/>
-						<button
-							type="submit"
-							className="bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50 px-3 py-2 sm:text-sm shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md focus:ring-1"
-						>
-							Get
-						</button>
-						<Link
-							href="/search"
-							className="bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50 inline-block px-3 py-2 sm:text-sm shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md focus:ring-1"
-						>
-							Search
-						</Link>
-					</form>
-					{err ? (
-						<pre>Error: {JSON.stringify(err, null, 2)}</pre>
-					) : loading ? (
-						<h1>Loading...</h1>
-					) : (
-						<Book book={book} />
-					)}
-				</main>
+						<span className="flex gap-1 grow sm:grow-0">
+							<button
+								type="submit"
+								className="grow bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50 px-3 py-2 sm:text-sm shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md focus:ring-1"
+							>
+								Get
+							</button>
+							<Link
+								href="/search"
+								className="grow bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50 inline-block px-3 py-2 sm:text-sm shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md focus:ring-1"
+							>
+								Search
+							</Link>
+						</span>
+					</div>
+					<div>
+						{err ? (
+							<pre>Error: {JSON.stringify(err, null, 2)}</pre>
+						) : loading ? (
+							<h1>Loading...</h1>
+						) : (
+							<Book book={book} />
+						)}
+					</div>
+					<div className="flex flex-wrap gap-1">
+						<input
+							type="text"
+							value={id}
+							onChange={e => setID(e.target.value)}
+							className="bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50 grow px-3 py-2 sm:text-sm shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md focus:ring-1"
+						/>
+						<span className="flex gap-1 grow sm:grow-0">
+							<button
+								type="submit"
+								className="grow bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50 px-3 py-2 sm:text-sm shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md focus:ring-1"
+							>
+								Get
+							</button>
+							<Link
+								href="/search"
+								className="grow bg-rose-50 text-gray-900 dark:bg-gray-900 dark:text-rose-50 inline-block px-3 py-2 sm:text-sm shadow-sm placeholder-slate-400 border border-slate-300 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md focus:ring-1"
+							>
+								Search
+							</Link>
+						</span>
+					</div>
+				</form>
 				<footer className="h-8">
 					本網站使用{' '}
 					<a
