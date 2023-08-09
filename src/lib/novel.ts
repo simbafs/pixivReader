@@ -23,7 +23,9 @@ export async function getNovel(id: string): Promise<book> {
 		title: data.body.title,
 		description: data.body.description,
 		tags: data.body.tags.tags.map((item: { tag: string }) => item.tag),
-		content: data.body.content,
+		content: data.body.content
+			.replaceAll(/\[\[.*?\]\]/g, '')
+			.replaceAll(/\[.*?\]/g, '')
 	}
 }
 
